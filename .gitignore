@@ -5,3 +5,5 @@ ai_vs_real_vit_model.zip
 dataset
 content
 pytorch
+full_model_base_code.ipynb
+vedio_predicting_check.ipynb
