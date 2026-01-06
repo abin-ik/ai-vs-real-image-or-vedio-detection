@@ -1,89 +1,147 @@
-# 🧠 AI vs Real Image Detection
+# 🧠 AI vs Real Image Detection (Vision Transformer)
 
-A deep learning project that detects whether an image is **AI-generated or real** using a **hybrid ensemble approach** combining a **custom-built CNN** and a **fine-tuned Vision Transformer (ViT)**.
-
-This project focuses on real-world applicability in **AI content detection, digital forensics, and media verification**.
+A deep learning project that fine-tunes a **Vision Transformer (ViT)** model to classify images as **REAL** or **AI-GENERATED (FAKE)**. This project uses **PyTorch** and **Hugging Face Transformers**, and is designed to be **interview-ready, modular, and production-friendly**.
 
 ---
 
 ## 🚀 Project Overview
 
-With the rapid growth of generative AI tools, distinguishing AI-generated images from real ones has become a critical challenge.
+With the rapid growth of generative AI, distinguishing real images from AI-generated ones has become critical. This project addresses that problem by:
 
-This project solves that problem using:
-- A **Convolutional Neural Network (CNN) built completely from scratch**
-- A **Vision Transformer (ViT) fine-tuned from a powerful pre-trained foundation model (Demigod ViT)**
-
-An **ensemble strategy** combines both models to produce a more accurate and robust final prediction.
+* Leveraging a **pretrained Vision Transformer (ViT)** model
+* Freezing the ViT backbone to retain learned visual features
+* Fine-tuning only the classification head for binary classification
+* Using Hugging Face's **Trainer API** for clean and scalable training
 
 ---
 
 ## 🧩 Model Architecture
 
-### 🔹 Custom CNN (Built From Scratch)
-- Implemented manually using **PyTorch**
-- Designed to learn low-level visual features such as:
-  - Edges
-  - Textures
-  - AI-generation artifacts
-- Trained specifically for **binary classification (AI vs Real)**
+* **Backbone:** Vision Transformer (ViT)
+* **Input Size:** 224 × 224 RGB images
+* **Output Classes:**
 
-### 🔹 Vision Transformer (ViT – Fine-Tuned)
-- Based on a **pre-trained ViT foundation model**
-- Fine-tuned on AI-generated and real image datasets
-- Captures **global context and semantic patterns** that CNNs may miss
+  * `0 → REAL`
+  * `1 → FAKE`
 
-### 🔹 Ensemble Strategy
-- Combines predictions from CNN and ViT
-- Uses probability-based decision logic
-- Improves generalization and reduces false predictions
+### 🔒 Transfer Learning Strategy
+
+* All ViT backbone layers are **frozen**
+* Only the **classification head** is trained
+* This reduces overfitting and speeds up training
+
+---
+
+## 📂 Dataset Structure
+
+The dataset must follow this folder structure:
+
+```
+dataset/
+├── train/
+│   ├── REAL/
+│   │   ├── img1.jpg
+│   │   └── img2.jpg
+│   └── FAKE/
+│       ├── img1.jpg
+│       └── img2.jpg
+│
+└── test/
+    ├── REAL/
+    └── FAKE/
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Python  
-- PyTorch  
-- Hugging Face Transformers  
-- Torchvision  
-- OpenCV  
-- PIL  
-- Vision Transformer (ViT)
+* **Python 3.9+**
+* **PyTorch**
+* **Hugging Face Transformers**
+* **Scikit-learn**
+* **Pillow (PIL)**
+
+---
+
+## ⚙️ Installation
+
+```bash
+pip install torch transformers scikit-learn pillow
+```
+
+(Optional, for GPU support)
+
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+```
+
+---
+
+## 🧪 Training Configuration
+
+| Parameter     | Value           |
+| ------------- | --------------- |
+| Batch Size    | 16              |
+| Epochs        | 2               |
+| Learning Rate | 1e-4            |
+| Evaluation    | Every 500 steps |
+| Metric        | Accuracy        |
+
+---
+
+## 📊 Evaluation Metric
+
+The model is evaluated using **classification accuracy**:
+
+```python
+accuracy = correct_predictions / total_predictions
+```
+
+---
+
+## 🏋️ Training
+
+To start fine-tuning the model:
+
+```bash
+python train.py
+```
+
+The best-performing model checkpoint is automatically saved.
 
 ---
 
 ## 📌 Key Features
 
-- ✅ CNN built completely from scratch  
-- ✅ ViT fine-tuned from a foundation model  
-- ✅ Ensemble-based prediction system  
-- ✅ Image-level inference support  
-- ✅ Extendable to video frame analysis  
-- ✅ Production-ready inference pipeline  
+✅ Vision Transformer–based classification
+✅ Transfer learning with frozen backbone
+✅ Clean custom PyTorch Dataset
+✅ Hugging Face Trainer integration
+✅ Modular and extensible design
 
 ---
 
-## 🎯 Use Cases
+## 🧠 Possible Improvements
 
-- AI-generated image detection  
-- Fake media & deepfake analysis  
-- Content moderation  
-- Digital forensics  
-- Computer vision research  
-
----
-
-## 🔗 Pretrained Model (Hugging Face)
-
-If you want to **try or integrate the fine-tuned ViT model**, it is available on Hugging Face:
-
-👉 **Hugging Face Model:**  
-https://huggingface.co/Abin90p/vit-ai-vs-real
+* Gradual layer unfreezing
+* Class imbalance handling
+* Precision / Recall / F1-score metrics
+* Integration with Streamlit or FastAPI
+* RAG-based explainability layer
 
 ---
 
-## 👤 Author
+## 👨‍💻 Author
 
-**Abin**  
-Aspiring Full-Stack AI Engineer  
-Deep Learning | Computer Vision | AI Systems
+**Abin**
+Full-Stack AI Engineer | ML | DL | NLP | Vision
+
+---
+
+## 📜 License
+
+This project is intended for **educational and research purposes**.
+
+---
+
+⭐ If you like this project, give it a star and feel free to contribute!
